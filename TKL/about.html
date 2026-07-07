@@ -1,0 +1,818 @@
+
+# ABOUT PAGE
+about_html = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Matimaku Mansions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #e8d5a3;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --charcoal: #1a1a1a;
+            --cream: #f5f0e8;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--darker);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--darker); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+        .cursor {
+            width: 20px; height: 20px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, background 0.2s ease;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot {
+            width: 4px; height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .cursor.hover {
+            transform: scale(3);
+            background: rgba(201, 169, 110, 0.1);
+        }
+        nav {
+            position: fixed; top: 0; left: 0;
+            width: 100%; padding: 25px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.5s ease;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            position: relative;
+            text-decoration: none;
+        }
+        .logo::after {
+            content: '';
+            position: absolute; bottom: -5px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.5s ease;
+        }
+        .logo:hover::after { width: 100%; }
+        .nav-links {
+            display: flex; gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a::before {
+            content: '';
+            position: absolute; bottom: 0; left: 50%;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::before { width: 100%; }
+        .nav-links a.active { color: var(--gold); }
+        .nav-links a.active::before { width: 100%; }
+        .nav-cta {
+            padding: 12px 30px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .nav-cta::before {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--gold);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+        .nav-cta:hover { color: var(--dark); }
+        .nav-cta:hover::before { left: 0; }
+        .page-hero {
+            height: 60vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .page-hero-bg {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                linear-gradient(to bottom, rgba(5,5,5,0.4), rgba(5,5,5,0.95)),
+                url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80') center/cover;
+            z-index: 1;
+        }
+        .page-hero-content {
+            position: relative; z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .page-hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        .page-hero-content p {
+            font-size: 1.1rem;
+            color: rgba(245, 240, 232, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .breadcrumb a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .breadcrumb a:hover { opacity: 0.7; }
+        .breadcrumb span { color: rgba(245, 240, 232, 0.5); }
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .section-label {
+            font-size: 0.8rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+        }
+        .section-label::before, .section-label::after {
+            content: '';
+            position: absolute; top: 50%;
+            width: 50px; height: 1px;
+            background: rgba(201, 169, 110, 0.3);
+        }
+        .section-label::before { right: calc(100% + 20px); }
+        .section-label::after { left: calc(100% + 20px); }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.2;
+        }
+        .story-section {
+            padding: 150px 60px;
+            position: relative;
+        }
+        .story-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+        .story-image {
+            position: relative;
+            height: 600px;
+        }
+        .story-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .story-image::before {
+            content: '';
+            position: absolute; top: -30px; left: -30px;
+            width: 100%; height: 100%;
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        .story-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        .story-content p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: rgba(245, 240, 232, 0.7);
+            margin-bottom: 25px;
+        }
+        .story-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--gold);
+            border-left: 3px solid var(--gold);
+            padding-left: 30px;
+            margin: 40px 0;
+            line-height: 1.6;
+        }
+        .values-section {
+            padding: 150px 60px;
+            background: var(--charcoal);
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .value-card {
+            padding: 50px 40px;
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            background: rgba(26, 26, 26, 0.4);
+        }
+        .value-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .value-card:hover::before { transform: scaleX(1); }
+        .value-card:hover {
+            border-color: rgba(201, 169, 110, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+        .value-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        .value-card p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: rgba(245, 240, 232, 0.6);
+        }
+        .timeline-section {
+            padding: 150px 60px;
+            position: relative;
+        }
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .timeline-line {
+            position: absolute; left: 50%; top: 0;
+            width: 1px; height: 100%;
+            background: rgba(201, 169, 110, 0.2);
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        .timeline-item:nth-child(even) .timeline-content { grid-column: 2; }
+        .timeline-item:nth-child(even) .timeline-year { grid-column: 1; text-align: right; }
+        .timeline-dot {
+            position: absolute; left: 50%; top: 10px;
+            width: 15px; height: 15px;
+            background: var(--gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 3px solid var(--darker);
+            z-index: 2;
+        }
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .timeline-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        .timeline-content p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: rgba(245, 240, 232, 0.6);
+        }
+        .team-section {
+            padding: 150px 60px;
+            background: var(--charcoal);
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .team-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .team-card-image {
+            width: 100%; height: 400px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            filter: grayscale(30%);
+        }
+        .team-card:hover .team-card-image {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        .team-card-overlay {
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; padding: 40px 30px;
+            background: linear-gradient(to top, rgba(5,5,5,0.95) 0%, transparent 100%);
+        }
+        .team-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--white);
+        }
+        .team-card .role {
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .team-card .bio {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(245, 240, 232, 0.6);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+        .team-card:hover .bio {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .awards-section {
+            padding: 150px 60px;
+        }
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .award-card {
+            padding: 40px;
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .award-card::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 0;
+            background: rgba(201, 169, 110, 0.05);
+            transition: height 0.4s ease;
+            z-index: -1;
+        }
+        .award-card:hover::after { height: 100%; }
+        .award-card:hover {
+            border-color: rgba(201, 169, 110, 0.3);
+            transform: translateY(-5px);
+        }
+        .award-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        .award-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+        .award-card p {
+            font-size: 0.85rem;
+            color: rgba(245, 240, 232, 0.5);
+        }
+        footer {
+            background: var(--dark);
+            padding: 80px 60px 40px;
+            border-top: 1px solid rgba(201, 169, 110, 0.1);
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        .footer-brand .logo { font-size: 2rem; margin-bottom: 20px; display: inline-block; }
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: rgba(245, 240, 232, 0.5);
+            max-width: 300px;
+        }
+        .footer-column h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--white);
+            margin-bottom: 25px;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a {
+            color: rgba(245, 240, 232, 0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 0;
+        }
+        .footer-column ul li a::before {
+            content: '';
+            position: absolute; left: -15px; top: 50%;
+            transform: translateY(-50%);
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .footer-column ul li a:hover { color: var(--gold); padding-left: 15px; }
+        .footer-column ul li a:hover::before { width: 10px; }
+        .footer-bottom {
+            border-top: 1px solid rgba(201, 169, 110, 0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .footer-bottom p { font-size: 0.8rem; color: rgba(245, 240, 232, 0.3); }
+        .footer-social { display: flex; gap: 20px; }
+        .footer-social a {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .footer-social a:hover {
+            background: var(--gold);
+            color: var(--dark);
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        @media (max-width: 1024px) {
+            .story-container { grid-template-columns: 1fr; gap: 60px; }
+            .timeline-item { grid-template-columns: 1fr; gap: 20px; }
+            .timeline-item:nth-child(even) .timeline-content { grid-column: 1; }
+            .timeline-item:nth-child(even) .timeline-year { grid-column: 1; text-align: left; }
+            .timeline-line { left: 20px; }
+            .timeline-dot { left: 20px; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 20px 30px; }
+            .nav-links { display: none; }
+            .page-hero { height: 50vh; }
+            .story-section, .values-section, .timeline-section, .team-section, .awards-section { padding: 80px 30px; }
+            .story-image { height: 400px; }
+            .story-image::before { display: none; }
+            .timeline-line, .timeline-dot { display: none; }
+            .footer-content { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+            .cursor, .cursor-dot { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+    <nav>
+        <a href="index.html" class="logo">Matimaku</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="properties.html">Properties</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="nav-cta">Book Viewing</a>
+    </nav>
+    <section class="page-hero">
+        <div class="page-hero-bg"></div>
+        <div class="page-hero-content">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span style="color: var(--gold);">About</span>
+            </div>
+            <h1>Our Story</h1>
+            <p>Two decades of curating the extraordinary. A legacy built on discretion, excellence, and an unwavering commitment to our clients.</p>
+        </div>
+    </section>
+    <section class="story-section">
+        <div class="story-container">
+            <div class="story-image reveal">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Our Story">
+            </div>
+            <div class="story-content reveal reveal-delay-1">
+                <span class="section-label" style="text-align: left; display: block; margin-bottom: 20px;">Since 2003</span>
+                <h2>A Legacy of<br>Excellence</h2>
+                <p>Matimaku Mansions was founded on a simple yet profound belief: that a home should be more than walls and a roof. It should be a reflection of one's aspirations, a sanctuary of beauty, and a testament to a life well-lived.</p>
+                <p>What began as a boutique consultancy in New York has grown into a global network of the world's most discerning property specialists. We have never compromised on our founding principle &mdash; every client deserves the extraordinary.</p>
+                <div class="story-quote">
+                    &ldquo;We do not find houses. We discover the spaces where legacies are born.&rdquo;
+                </div>
+                <p>Our team operates across four continents, maintaining deep relationships with architects, developers, and private sellers who share our vision. This network allows us to present opportunities that never reach the open market.</p>
+            </div>
+        </div>
+    </section>
+    <section class="values-section">
+        <div class="section-header reveal">
+            <span class="section-label">What Drives Us</span>
+            <h2 class="section-title">Our Core Values</h2>
+        </div>
+        <div class="values-grid">
+            <div class="value-card reveal">
+                <span class="value-icon">&#128301;</span>
+                <h3>Discretion</h3>
+                <p>Privacy is not a feature &mdash; it is our foundation. Every transaction, every conversation, every detail is handled with the utmost confidentiality.</p>
+            </div>
+            <div class="value-card reveal reveal-delay-1">
+                <span class="value-icon">&#11088;</span>
+                <h3>Excellence</h3>
+                <p>We accept nothing less than perfection. From the properties we represent to the service we provide, excellence is our only standard.</p>
+            </div>
+            <div class="value-card reveal reveal-delay-2">
+                <span class="value-icon">&#129309;</span>
+                <h3>Integrity</h3>
+                <p>Trust is earned, not given. We build lasting relationships through transparency, honesty, and a genuine commitment to our clients' best interests.</p>
+            </div>
+            <div class="value-card reveal reveal-delay-3">
+                <span class="value-icon">&#127919;</span>
+                <h3>Vision</h3>
+                <p>We see potential where others see property. Our ability to envision the extraordinary in every space sets us apart.</p>
+            </div>
+        </div>
+    </section>
+    <section class="timeline-section">
+        <div class="section-header reveal">
+            <span class="section-label">Our Journey</span>
+            <h2 class="section-title">Timeline of Excellence</h2>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2003</div>
+                <div class="timeline-content">
+                    <h3>The Beginning</h3>
+                    <p>Matimaku Mansions is founded in New York City with a vision to redefine luxury real estate. Our first sale: a penthouse on Park Avenue.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2008</div>
+                <div class="timeline-content">
+                    <h3>Global Expansion</h3>
+                    <p>We open offices in London and Dubai, establishing our international presence and building relationships with the world's most exclusive property networks.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2015</div>
+                <div class="timeline-content">
+                    <h3>The $100M Club</h3>
+                    <p>Matimaku becomes the first independent agency to close three $100M+ transactions in a single year, cementing our reputation at the pinnacle of the market.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2020</div>
+                <div class="timeline-content">
+                    <h3>Digital Innovation</h3>
+                    <p>We launch our proprietary virtual viewing platform, allowing clients to experience properties with unprecedented immersion from anywhere in the world.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2026</div>
+                <div class="timeline-content">
+                    <h3>Today &amp; Beyond</h3>
+                    <p>With over 247 estates sold and a client satisfaction rate of 98%, Matimaku continues to set the global standard for luxury real estate curation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="team-section">
+        <div class="section-header reveal">
+            <span class="section-label">The People</span>
+            <h2 class="section-title">Our Leadership</h2>
+        </div>
+        <div class="team-grid">
+            <div class="team-card reveal">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="CEO" class="team-card-image">
+                <div class="team-card-overlay">
+                    <h3>Victor Ashworth</h3>
+                    <div class="role">Founder &amp; CEO</div>
+                    <div class="bio">With over 30 years in luxury real estate, Victor has shaped the industry standard for discretion and excellence.</div>
+                </div>
+            </div>
+            <div class="team-card reveal reveal-delay-1">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="COO" class="team-card-image">
+                <div class="team-card-overlay">
+                    <h3>Elena Vasquez</h3>
+                    <div class="role">Chief Operating Officer</div>
+                    <div class="bio">Elena oversees our global operations, ensuring every client experience exceeds the extraordinary.</div>
+                </div>
+            </div>
+            <div class="team-card reveal reveal-delay-2">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" alt="Director" class="team-card-image">
+                <div class="team-card-overlay">
+                    <h3>James Harrington</h3>
+                    <div class="role">Director of Acquisitions</div>
+                    <div class="bio">James leads our property sourcing, with an unmatched eye for architectural significance and investment potential.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="awards-section">
+        <div class="section-header reveal">
+            <span class="section-label">Recognition</span>
+            <h2 class="section-title">Awards &amp; Honors</h2>
+        </div>
+        <div class="awards-grid">
+            <div class="award-card reveal">
+                <div class="award-year">2025</div>
+                <h3>Best Luxury Agency</h3>
+                <p>International Property Awards</p>
+            </div>
+            <div class="award-card reveal reveal-delay-1">
+                <div class="award-year">2024</div>
+                <h3>Excellence in Service</h3>
+                <p>Luxury Real Estate Council</p>
+            </div>
+            <div class="award-card reveal reveal-delay-2">
+                <div class="award-year">2023</div>
+                <h3>Global Impact Award</h3>
+                <p>World Real Estate Forum</p>
+            </div>
+            <div class="award-card reveal reveal-delay-3">
+                <div class="award-year">2022</div>
+                <h3>Most Trusted Brand</h3>
+                <p>Wealth Management Review</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">Matimaku</a>
+                <p>Curating extraordinary residences for extraordinary lives since 2003. Where architecture meets artistry, and houses become legacies.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Markets</h4>
+                <ul>
+                    <li><a href="#">New York</a></li>
+                    <li><a href="#">Los Angeles</a></li>
+                    <li><a href="#">London</a></li>
+                    <li><a href="#">Dubai</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Disclaimers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Matimaku Mansions. All rights reserved. Crafted by <strong style="color: var(--gold);">Takudzwa P. Matimura</strong></p>
+            <div class="footer-social">
+                <a href="#">in</a>
+                <a href="#">ig</a>
+                <a href="#">X</a>
+                <a href="#">yt</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        document.addEventListener('mousemove', function(e) {
+            cursor.style.left = (e.clientX - 10) + 'px';
+            cursor.style.top = (e.clientY - 10) + 'px';
+            cursorDot.style.left = (e.clientX - 2) + 'px';
+            cursorDot.style.top = (e.clientY - 2) + 'px';
+        });
+        document.querySelectorAll('a, button, .value-card, .team-card, .award-card').forEach(function(el) {
+            el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
+            el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+        });
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) { entry.target.classList.add('active'); }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(function(el) { revealObserver.observe(el); });
+    </script>
+</body>
+</html>'''
+
+with open('/mnt/agents/output/about.html', 'w') as f:
+    f.write(about_html)
+
+print("about.html written successfully")

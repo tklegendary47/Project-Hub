@@ -1,0 +1,101 @@
+
+{
+  "products": [
+    {
+      "id": "MM-001",
+      "name": "Obsidian Marble Console",
+      "category": "Furniture",
+      "price": 4850,
+      "description": "Hand-carved black marble console table with gold leaf accents. A statement piece for any grand entryway.",
+      "image": "images/products/3_Luxury_Marble_Console_Table_Gold.png"
+    },
+    {
+      "id": "MM-002",
+      "name": "Aurora Crystal Chandelier",
+      "category": "Lighting",
+      "price": 12900,
+      "description": "Cascading crystal tiers with programmable LED warmth. Transforms any room into a palace.",
+      "image": "images/products/6_Banquet_Luxury_Palace_Gold_Chandelier.png"
+    },
+    {
+      "id": "MM-003",
+      "name": "Velvet Sovereign Armchair",
+      "category": "Furniture",
+      "price": 3200,
+      "description": "Plush charcoal velvet upholstery with hand-polished brass frame. The throne of modern luxury.",
+      "image": "images/products/2_Office_Living_Room_Luxury_Gold_Frame.png"
+    },
+    {
+      "id": "MM-004",
+      "name": "Golden Serpent Sculpture",
+      "category": "Art",
+      "price": 7800,
+      "description": "Limited edition bronze sculpture with 24k gold plating. Signed by the artist. Museum quality.",
+      "image": "images/products/4_FINEST_Modern_Abstract_Gold_Metal.png"
+    },
+    {
+      "id": "MM-005",
+      "name": "Brass Arc Floor Lamp",
+      "category": "Lighting",
+      "price": 1850,
+      "description": "Sleek brass arc with hand-blown glass shade. Adjustable height and warm ambient glow.",
+      "image": "images/products/1_Luxury_Italian_Burnished_Brass_Modern.png"
+    },
+    {
+      "id": "MM-006",
+      "name": "Imperial Gold Vase",
+      "category": "Décor",
+      "price": 950,
+      "description": "Hand-painted porcelain with 22k gold leaf detailing. Each piece is unique and numbered.",
+      "image": "images/products/6_High_grade_European_Luxury_Gold_Silver.png"
+    },
+    {
+      "id": "MM-007",
+      "name": "Regal Dining Ensemble",
+      "category": "Furniture",
+      "price": 18500,
+      "description": "Carrara marble top dining table with six velvet-upholstered chairs. Seats eight in absolute comfort.",
+      "image": "images/products/5_Elina_Cream_Gold_Marble_Dining_Table.png"
+    },
+    {
+      "id": "MM-008",
+      "name": "Palace Crystal Chandelier",
+      "category": "Lighting",
+      "price": 28000,
+      "description": "Grand three-tier crystal chandelier with gilded brass arms. The crown jewel of any ceiling.",
+      "image": "images/products/2_Luxury_Palace_Style_Tiered_Gilded.png"
+    },
+    {
+      "id": "MM-009",
+      "name": "Silk Elysium Throw",
+      "category": "Décor",
+      "price": 1200,
+      "description": "100% mulberry silk throw in champagne gold. Hand-finished with subtle embroidered monogram.",
+      "image": "images/products/3_THXSILK_100_Mulberry_Silk_Inside.png"
+    },
+    {
+      "id": "MM-010",
+      "name": "Architectural Master Plan",
+      "category": "Architecture",
+      "price": 450,
+      "description": "Signed limited edition blueprints of iconic luxury residences. Framed in brushed aluminum.",
+      "image": "images/products/1_Stunning_Luxury_House_Plans_from.png"
+    },
+    {
+      "id": "MM-011",
+      "name": "Contemporary Brass Sconce",
+      "category": "Lighting",
+      "price": 1450,
+      "description": "Minimalist brass wall sconce with frosted glass diffuser. Perfect for gallery walls.",
+      "image": "images/products/5_Contemporary_Brass_Floor_Lamp_Rockett.png"
+    },
+    {
+      "id": "MM-012",
+      "name": "Champagne Silk Duvet",
+      "category": "Décor",
+      "price": 2100,
+      "description": "Premium silk duvet cover in champagne hue with gold thread embroidery. 800 thread count.",
+      "image": "images/products/4_High_End_Silk_Throw_Maison_de_la.png"
+    }
+  ]
+}

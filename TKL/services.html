@@ -1,0 +1,813 @@
+
+# SERVICES PAGE
+services_html = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Matimaku Mansions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #e8d5a3;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --charcoal: #1a1a1a;
+            --cream: #f5f0e8;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--darker);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--darker); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+        .cursor {
+            width: 20px; height: 20px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, background 0.2s ease;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot {
+            width: 4px; height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .cursor.hover {
+            transform: scale(3);
+            background: rgba(201, 169, 110, 0.1);
+        }
+        nav {
+            position: fixed; top: 0; left: 0;
+            width: 100%; padding: 25px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.5s ease;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            position: relative;
+            text-decoration: none;
+        }
+        .logo::after {
+            content: '';
+            position: absolute; bottom: -5px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.5s ease;
+        }
+        .logo:hover::after { width: 100%; }
+        .nav-links {
+            display: flex; gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a::before {
+            content: '';
+            position: absolute; bottom: 0; left: 50%;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::before { width: 100%; }
+        .nav-links a.active { color: var(--gold); }
+        .nav-links a.active::before { width: 100%; }
+        .nav-cta {
+            padding: 12px 30px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .nav-cta::before {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--gold);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+        .nav-cta:hover { color: var(--dark); }
+        .nav-cta:hover::before { left: 0; }
+        .page-hero {
+            height: 60vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .page-hero-bg {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                linear-gradient(to bottom, rgba(5,5,5,0.4), rgba(5,5,5,0.95)),
+                url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1920&q=80') center/cover;
+            z-index: 1;
+        }
+        .page-hero-content {
+            position: relative; z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .page-hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        .page-hero-content p {
+            font-size: 1.1rem;
+            color: rgba(245, 240, 232, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .breadcrumb a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .breadcrumb a:hover { opacity: 0.7; }
+        .breadcrumb span { color: rgba(245, 240, 232, 0.5); }
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .section-label {
+            font-size: 0.8rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+        }
+        .section-label::before, .section-label::after {
+            content: '';
+            position: absolute; top: 50%;
+            width: 50px; height: 1px;
+            background: rgba(201, 169, 110, 0.3);
+        }
+        .section-label::before { right: calc(100% + 20px); }
+        .section-label::after { left: calc(100% + 20px); }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.2;
+        }
+        .services-intro {
+            padding: 150px 60px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .services-intro p {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: rgba(245, 240, 232, 0.7);
+        }
+        .services-grid {
+            padding: 0 60px 150px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+        .service-card {
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            padding: 60px 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 4px; height: 0;
+            background: var(--gold);
+            transition: height 0.5s ease;
+        }
+        .service-card:hover::before { height: 100%; }
+        .service-card:hover {
+            border-color: rgba(201, 169, 110, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+        .service-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: rgba(201, 169, 110, 0.08);
+            position: absolute;
+            top: 20px; right: 30px;
+            line-height: 1;
+            font-weight: 700;
+        }
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            display: block;
+        }
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        .service-card p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: rgba(245, 240, 232, 0.6);
+            margin-bottom: 30px;
+        }
+        .service-features {
+            list-style: none;
+        }
+        .service-features li {
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .service-features li::before {
+            content: '&#10003;';
+            color: var(--gold);
+            font-weight: bold;
+        }
+        .process-section {
+            padding: 150px 60px;
+            background: var(--charcoal);
+        }
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            position: relative;
+        }
+        .process-steps::before {
+            content: '';
+            position: absolute; top: 40px; left: 10%;
+            width: 80%; height: 1px;
+            background: rgba(201, 169, 110, 0.2);
+            z-index: 0;
+        }
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .step-number {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: var(--charcoal);
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin: 0 auto 30px;
+            transition: all 0.4s ease;
+        }
+        .process-step:hover .step-number {
+            background: var(--gold);
+            color: var(--dark);
+            transform: scale(1.1);
+        }
+        .process-step h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        .process-step p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: rgba(245, 240, 232, 0.6);
+        }
+        .packages-section {
+            padding: 150px 60px;
+        }
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .package-card {
+            border: 1px solid rgba(201, 169, 110, 0.1);
+            padding: 60px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            background: rgba(26, 26, 26, 0.4);
+        }
+        .package-card.featured {
+            border-color: var(--gold);
+            transform: scale(1.05);
+        }
+        .package-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute; top: 0; left: 0;
+            width: 100%; padding: 10px;
+            background: var(--gold);
+            color: var(--dark);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+        .package-card:hover {
+            border-color: rgba(201, 169, 110, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+        .package-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        .package-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+        .package-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+        .package-price span {
+            font-size: 1rem;
+            color: rgba(245, 240, 232, 0.5);
+        }
+        .package-desc {
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.6);
+            margin-bottom: 40px;
+        }
+        .package-features {
+            list-style: none;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        .package-features li {
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.7);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .package-features li::before {
+            content: '&#10003;';
+            color: var(--gold);
+        }
+        .package-cta {
+            padding: 15px 40px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .package-cta::before {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--gold);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+        .package-cta:hover { color: var(--dark); }
+        .package-cta:hover::before { left: 0; }
+        .package-card.featured .package-cta {
+            background: var(--gold);
+            color: var(--dark);
+        }
+        .package-card.featured .package-cta:hover {
+            background: var(--gold-light);
+            border-color: var(--gold-light);
+        }
+        footer {
+            background: var(--dark);
+            padding: 80px 60px 40px;
+            border-top: 1px solid rgba(201, 169, 110, 0.1);
+        }
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        .footer-brand .logo { font-size: 2rem; margin-bottom: 20px; display: inline-block; }
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: rgba(245, 240, 232, 0.5);
+            max-width: 300px;
+        }
+        .footer-column h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--white);
+            margin-bottom: 25px;
+        }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a {
+            color: rgba(245, 240, 232, 0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 0;
+        }
+        .footer-column ul li a::before {
+            content: '';
+            position: absolute; left: -15px; top: 50%;
+            transform: translateY(-50%);
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .footer-column ul li a:hover { color: var(--gold); padding-left: 15px; }
+        .footer-column ul li a:hover::before { width: 10px; }
+        .footer-bottom {
+            border-top: 1px solid rgba(201, 169, 110, 0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .footer-bottom p { font-size: 0.8rem; color: rgba(245, 240, 232, 0.3); }
+        .footer-social { display: flex; gap: 20px; }
+        .footer-social a {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .footer-social a:hover {
+            background: var(--gold);
+            color: var(--dark);
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        @media (max-width: 1024px) {
+            .process-steps { grid-template-columns: repeat(2, 1fr); }
+            .process-steps::before { display: none; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 20px 30px; }
+            .nav-links { display: none; }
+            .page-hero { height: 50vh; }
+            .services-intro, .services-grid, .process-section, .packages-section { padding: 80px 30px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: 1fr; }
+            .packages-grid { grid-template-columns: 1fr; }
+            .package-card.featured { transform: none; }
+            .package-card.featured:hover { transform: translateY(-10px); }
+            .footer-content { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+            .cursor, .cursor-dot { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+    <nav>
+        <a href="index.html" class="logo">Matimaku</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="properties.html">Properties</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="nav-cta">Book Viewing</a>
+    </nav>
+    <section class="page-hero">
+        <div class="page-hero-bg"></div>
+        <div class="page-hero-content">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span style="color: var(--gold);">Services</span>
+            </div>
+            <h1>White-Glove Services</h1>
+            <p>Beyond property acquisition. A comprehensive suite of services designed for those who demand nothing less than extraordinary.</p>
+        </div>
+    </section>
+    <section class="services-intro reveal">
+        <p>At Matimaku Mansions, we understand that acquiring a luxury residence is just the beginning. Our comprehensive service offering ensures that every aspect of your property journey &mdash; from search to settlement and beyond &mdash; is handled with the precision and care you deserve.</p>
+    </section>
+    <section class="services-grid">
+        <div class="service-card reveal">
+            <span class="service-number">01</span>
+            <span class="service-icon">&#128269;</span>
+            <h3>Property Search</h3>
+            <p>Our bespoke property search service goes beyond the market. We leverage our global network to present opportunities that align perfectly with your vision, lifestyle, and investment goals.</p>
+            <ul class="service-features">
+                <li>Access to off-market listings</li>
+                <li>Personalized property curation</li>
+                <li>Global market intelligence</li>
+                <li>Virtual preview tours</li>
+            </ul>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+            <span class="service-number">02</span>
+            <span class="service-icon">&#128188;</span>
+            <h3>Acquisition Advisory</h3>
+            <p>Navigate complex transactions with confidence. Our advisory team provides expert guidance on valuation, negotiation, due diligence, and structuring to secure your investment.</p>
+            <ul class="service-features">
+                <li>Independent valuation reports</li>
+                <li>Negotiation representation</li>
+                <li>Legal &amp; tax structuring</li>
+                <li>Due diligence management</li>
+            </ul>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+            <span class="service-number">03</span>
+            <span class="service-icon">&#127968;</span>
+            <h3>Property Management</h3>
+            <p>Preserve and enhance the value of your estate with our comprehensive management services. From maintenance to renovations, we ensure your property remains impeccable.</p>
+            <ul class="service-features">
+                <li>24/7 estate management</li>
+                <li>Vendor &amp; contractor oversight</li>
+                <li>Preventive maintenance programs</li>
+                <li>Value enhancement consulting</li>
+            </ul>
+        </div>
+        <div class="service-card reveal">
+            <span class="service-number">04</span>
+            <span class="service-icon">&#128736;</span>
+            <h3>Interior Design</h3>
+            <p>Transform your residence into a personal sanctuary. Our design partners create bespoke interiors that reflect your taste while maximizing the architectural potential of your space.</p>
+            <ul class="service-features">
+                <li>Bespoke interior design</li>
+                <li>Art curation &amp; acquisition</li>
+                <li>Smart home integration</li>
+                <li>Landscape architecture</li>
+            </ul>
+        </div>
+        <div class="service-card reveal reveal-delay-1">
+            <span class="service-number">05</span>
+            <span class="service-icon">&#128506;</span>
+            <h3>Relocation Services</h3>
+            <p>Moving to a new city or country should be exciting, not stressful. Our relocation team handles every detail, from school placements to cultural orientation.</p>
+            <ul class="service-features">
+                <li>School &amp; university placement</li>
+                <li>Immigration &amp; visa support</li>
+                <li>Household goods relocation</li>
+                <li>Cultural integration programs</li>
+            </ul>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+            <span class="service-number">06</span>
+            <span class="service-icon">&#128176;</span>
+            <h3>Investment Advisory</h3>
+            <p>Build and diversify your real estate portfolio with strategic guidance. Our investment team identifies high-potential opportunities across global luxury markets.</p>
+            <ul class="service-features">
+                <li>Portfolio strategy &amp; planning</li>
+                <li>Market trend analysis</li>
+                <li>Development opportunity sourcing</li>
+                <li>Exit strategy consulting</li>
+            </ul>
+        </div>
+    </section>
+    <section class="process-section">
+        <div class="section-header reveal">
+            <span class="section-label">How We Work</span>
+            <h2 class="section-title">Our Process</h2>
+        </div>
+        <div class="process-container">
+            <div class="process-steps">
+                <div class="process-step reveal">
+                    <div class="step-number">1</div>
+                    <h3>Discovery</h3>
+                    <p>We begin with an in-depth consultation to understand your vision, lifestyle, and investment objectives.</p>
+                </div>
+                <div class="process-step reveal reveal-delay-1">
+                    <div class="step-number">2</div>
+                    <h3>Curation</h3>
+                    <p>Our team scours global markets to present a curated selection of properties that match your criteria.</p>
+                </div>
+                <div class="process-step reveal reveal-delay-2">
+                    <div class="step-number">3</div>
+                    <h3>Experience</h3>
+                    <p>Private viewings, virtual tours, and immersive experiences bring each property to life on your terms.</p>
+                </div>
+                <div class="process-step reveal reveal-delay-3">
+                    <div class="step-number">4</div>
+                    <h3>Acquisition</h3>
+                    <p>Expert negotiation and seamless transaction management ensure a flawless closing experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="packages-section">
+        <div class="section-header reveal">
+            <span class="section-label">Membership</span>
+            <h2 class="section-title">Service Packages</h2>
+        </div>
+        <div class="packages-grid">
+            <div class="package-card reveal">
+                <div class="package-name">Essential</div>
+                <div class="package-price">$25,000<span>/year</span></div>
+                <div class="package-desc">For the discerning buyer seeking curated access</div>
+                <ul class="package-features">
+                    <li>Priority property alerts</li>
+                    <li>Quarterly market reports</li>
+                    <li>Dedicated agent access</li>
+                    <li>Virtual tour capabilities</li>
+                    <li>Transaction support</li>
+                </ul>
+                <a href="contact.html" class="package-cta">Get Started</a>
+            </div>
+            <div class="package-card featured reveal reveal-delay-1">
+                <div class="package-name">Concierge</div>
+                <div class="package-price">$75,000<span>/year</span></div>
+                <div class="package-desc">Our most popular package for active collectors</div>
+                <ul class="package-features">
+                    <li>Everything in Essential</li>
+                    <li>Off-market access</li>
+                    <li>Private viewing coordination</li>
+                    <li>Interior design consultation</li>
+                    <li>Property management</li>
+                    <li>24/7 concierge support</li>
+                </ul>
+                <a href="contact.html" class="package-cta">Get Started</a>
+            </div>
+            <div class="package-card reveal reveal-delay-2">
+                <div class="package-name">Sovereign</div>
+                <div class="package-price">$150,000<span>/year</span></div>
+                <div class="package-desc">The ultimate white-glove experience</div>
+                <ul class="package-features">
+                    <li>Everything in Concierge</li>
+                    <li>Global portfolio management</li>
+                    <li>Investment advisory</li>
+                    <li>Relocation services</li>
+                    <li>Private jet coordination</li>
+                    <li>Family office integration</li>
+                </ul>
+                <a href="contact.html" class="package-cta">Get Started</a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">Matimaku</a>
+                <p>Curating extraordinary residences for extraordinary lives since 2003. Where architecture meets artistry, and houses become legacies.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Markets</h4>
+                <ul>
+                    <li><a href="#">New York</a></li>
+                    <li><a href="#">Los Angeles</a></li>
+                    <li><a href="#">London</a></li>
+                    <li><a href="#">Dubai</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Disclaimers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Matimaku Mansions. All rights reserved. Crafted by <strong style="color: var(--gold);">Takudzwa P. Matimura</strong></p>
+            <div class="footer-social">
+                <a href="#">in</a>
+                <a href="#">ig</a>
+                <a href="#">X</a>
+                <a href="#">yt</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        document.addEventListener('mousemove', function(e) {
+            cursor.style.left = (e.clientX - 10) + 'px';
+            cursor.style.top = (e.clientY - 10) + 'px';
+            cursorDot.style.left = (e.clientX - 2) + 'px';
+            cursorDot.style.top = (e.clientY - 2) + 'px';
+        });
+        document.querySelectorAll('a, button, .service-card, .package-card, .process-step').forEach(function(el) {
+            el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
+            el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+        });
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) { entry.target.classList.add('active'); }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(function(el) { revealObserver.observe(el); });
+    </script>
+</body>
+</html>'''
+
+with open('/mnt/agents/output/services.html', 'w') as f:
+    f.write(services_html)
+
+print("services.html written successfully")
