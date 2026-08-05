@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Beacon — Dashboard Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body class="dash-body">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      Beacon
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="index.html#product">Product</a>
+      <a href="index.html#pricing">Pricing</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="index.html#waitlist" class="btn btn-glow">Join the waitlist</a>
+    </div>
+  </div>
+</header>
+
+<div class="dash-shell">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="dash-side">
+    <div class="dash-side-top">
+      <span class="dash-domain-label">Tracking</span>
+      <div class="dash-domain">lagosmarket.ng</div>
+    </div>
+    <nav class="dash-nav">
+      <a class="dash-nav-item dash-nav-item--active">
+        <span class="dash-dot"></span> Overview
+      </a>
+      <a class="dash-nav-item">Mentions</a>
+      <a class="dash-nav-item">Diagnostics</a>
+      <a class="dash-nav-item">Reports</a>
+      <a class="dash-nav-item">Settings</a>
+    </nav>
+    <div class="dash-side-bottom">
+      <p>This is a static preview of the product experience. Real data populates once your site is connected.</p>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="dash-main">
+    <div class="dash-header-row">
+      <div>
+        <p class="dash-eyebrow">Weekly pulse · Jul 27 – Aug 2</p>
+        <h1 class="dash-title">You're being cited more this week.</h1>
+      </div>
+      <button class="btn btn-line">Download PDF report</button>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="dash-stats">
+      <div class="dash-card">
+        <span class="dash-card-label">Overall mention rate</span>
+        <div class="dash-card-value" id="statMention">0%</div>
+        <span class="dash-card-delta dash-card-delta--up">▲ 9 pts vs last week</span>
+      </div>
+      <div class="dash-card">
+        <span class="dash-card-label">Engines citing you</span>
+        <div class="dash-card-value" id="statEngines">0/5</div>
+        <span class="dash-card-delta">Gemini newly citing this week</span>
+      </div>
+      <div class="dash-card">
+        <span class="dash-card-label">Open diagnostics</span>
+        <div class="dash-card-value" id="statOpen">0</div>
+        <span class="dash-card-delta dash-card-delta--warn">2 high priority</span>
+      </div>
+      <div class="dash-card">
+        <span class="dash-card-label">Fixes verified</span>
+        <div class="dash-card-value" id="statFixed">0</div>
+        <span class="dash-card-delta dash-card-delta--up">All confirmed live</span>
+      </div>
+    </div>
+
+    <!-- ENGINE BREAKDOWN -->
+    <section class="dash-panel">
+      <div class="dash-panel-head">
+        <h2>Mention rate by engine</h2>
+        <span class="dash-panel-note">Last checked 6 minutes ago</span>
+      </div>
+      <div class="engine-list">
+        <div class="engine-row">
+          <span class="engine-name">ChatGPT</span>
+          <div class="engine-bar"><div class="engine-bar-fill" data-fill="78" style="background: var(--glow);"></div></div>
+          <span class="engine-pct">78%</span>
+        </div>
+        <div class="engine-row">
+          <span class="engine-name">Perplexity</span>
+          <div class="engine-bar"><div class="engine-bar-fill" data-fill="64" style="background: var(--glow);"></div></div>
+          <span class="engine-pct">64%</span>
+        </div>
+        <div class="engine-row">
+          <span class="engine-name">Google AI</span>
+          <div class="engine-bar"><div class="engine-bar-fill" data-fill="51" style="background: var(--glow);"></div></div>
+          <span class="engine-pct">51%</span>
+        </div>
+        <div class="engine-row">
+          <span class="engine-name">Gemini</span>
+          <div class="engine-bar"><div class="engine-bar-fill" data-fill="22" style="background: var(--teal);"></div></div>
+          <span class="engine-pct">22%</span>
+        </div>
+        <div class="engine-row">
+          <span class="engine-name">Claude</span>
+          <div class="engine-bar"><div class="engine-bar-fill" data-fill="0" style="background: var(--coral);"></div></div>
+          <span class="engine-pct dash-pct-zero">Not yet cited</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAGNOSTICS -->
+    <section class="dash-panel">
+      <div class="dash-panel-head">
+        <h2>What to fix next</h2>
+        <span class="dash-panel-note">Ranked by expected impact</span>
+      </div>
+      <div class="diag-list">
+        <div class="diag-card diag-card--high">
+          <div class="diag-top">
+            <span class="diag-priority diag-priority--high">High priority</span>
+            <span class="diag-engine">Claude · Google AI</span>
+          </div>
+          <h3>No clear answer to "best e-commerce site in Lagos"</h3>
+          <p>Your product pages don't state your location or delivery area in plain text — AI engines can't confidently confirm you serve Lagos customers.</p>
+          <ul>
+            <li>Add a clear "Delivery across Lagos" line to your homepage and product pages</li>
+            <li>Add a short FAQ block answering "Do you deliver in Lagos?" directly</li>
+          </ul>
+          <button class="btn btn-ghost btn-sm">Mark as fixed</button>
+        </div>
+        <div class="diag-card diag-card--high">
+          <div class="diag-top">
+            <span class="diag-priority diag-priority--high">High priority</span>
+            <span class="diag-engine">Claude</span>
+          </div>
+          <h3>Missing structured product data</h3>
+          <p>Your product pages don't include structured data, so AI engines can't reliably extract price, availability, or category information.</p>
+          <ul>
+            <li>Add basic product structured data (name, price, availability)</li>
+            <li>Re-run this check after publishing — Beacon verifies automatically</li>
+          </ul>
+          <button class="btn btn-ghost btn-sm">Mark as fixed</button>
+        </div>
+        <div class="diag-card">
+          <div class="diag-top">
+            <span class="diag-priority diag-priority--med">Medium priority</span>
+            <span class="diag-engine">Gemini</span>
+          </div>
+          <h3>Thin "About" content</h3>
+          <p>Your About page is under 80 words — too short for AI engines to confidently describe what your business does.</p>
+          <ul>
+            <li>Expand your About page to 150+ words describing what you sell and who it's for</li>
+          </ul>
+          <button class="btn btn-ghost btn-sm">Mark as fixed</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

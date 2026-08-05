@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Beacon — Get Cited by AI Search</title>
+<meta name="description" content="Beacon tracks whether ChatGPT, Perplexity, Gemini, and Google AI mention your business — and shows you exactly what to fix when they don't." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      Beacon
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#how-it-works">How it works</a>
+      <a href="#product">Product</a>
+      <a href="#pricing">Pricing</a>
+      <a href="dashboard-preview.html">See the dashboard</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-ghost">Log in</a>
+      <a href="#waitlist" class="btn btn-glow">Join the waitlist</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">For businesses navigating AI search</p>
+      <h1>
+        Every day, AI decides<br>
+        who gets <em>found</em> —<br>
+        and who goes <span class="dim">dark</span>.
+      </h1>
+      <p class="hero-sub">
+        Beacon checks whether ChatGPT, Perplexity, Gemini, and Google AI
+        mention your business when it matters — then tells you exactly
+        what to fix when they stop.
+      </p>
+      <div class="hero-actions">
+        <a href="#waitlist" class="btn btn-glow btn-lg">Join the waitlist</a>
+        <a href="dashboard-preview.html" class="btn btn-line btn-lg">Watch how it works →</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-stat">
+          <span class="proof-num">60%</span>
+          <span class="proof-label">of searches now end<br>without a single click</span>
+        </div>
+        <div class="proof-divider"></div>
+        <div class="proof-stat">
+          <span class="proof-num">5</span>
+          <span class="proof-label">AI engines tracked<br>in one place</span>
+        </div>
+        <div class="proof-divider"></div>
+        <div class="proof-stat">
+          <span class="proof-num">0</span>
+          <span class="proof-label">local competitors —<br>first of its kind</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <canvas id="beacon" width="640" height="640" aria-hidden="true"></canvas>
+      <p class="hero-visual-caption">A live field of businesses competing for AI's attention. One of them is being cited right now.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section class="problem" id="problem">
+  <div class="section-inner">
+    <p class="eyebrow eyebrow-dark">The shift already happened</p>
+    <h2 class="section-title">Your traffic isn't dropping.<br>It's disappearing before it's counted.</h2>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="problem-mark">No visibility</span>
+        <p>There's currently no way to know whether AI engines mention your business at all — you just quietly stop showing up.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-mark">No warning</span>
+        <p>By the time a traffic drop shows up in your analytics, the mentions have often been gone for weeks.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-mark">No fix</span>
+        <p>Even businesses that notice the problem have no clear next step — just a vague sense that "AI search is different now."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCT / SOLUTION ============ -->
+<section class="product" id="product">
+  <div class="section-inner">
+    <p class="eyebrow eyebrow-dark">How Beacon works</p>
+    <h2 class="section-title">Two things, working together.</h2>
+
+    <div class="product-split">
+      <div class="product-panel">
+        <span class="panel-index">Tracker</span>
+        <h3>See exactly where you stand</h3>
+        <p>Beacon checks your business daily against real prompts across ChatGPT, Perplexity, Gemini, Claude, and Google AI — then alerts you the moment a mention drops, before it shows up as lost revenue.</p>
+        <ul class="panel-list">
+          <li>Daily checks across 5 AI engines</li>
+          <li>Instant alerts on mention drops</li>
+          <li>Plain-language mention history, not raw logs</li>
+        </ul>
+      </div>
+      <div class="product-panel product-panel--accent">
+        <span class="panel-index">Diagnostic</span>
+        <h3>Know exactly what to fix</h3>
+        <p>When you're missing, Beacon explains why in plain English — thin content, missing structured data, no clear answer to the likely question — and gives you concrete, prioritized fixes, not a wall of SEO jargon.</p>
+        <ul class="panel-list">
+          <li>Plain-English reasons for every gap</li>
+          <li>2–3 concrete fixes per issue, ranked by impact</li>
+          <li>Re-checks automatically after you publish a fix</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how" id="how-it-works">
+  <div class="section-inner">
+    <p class="eyebrow eyebrow-dark">Getting started</p>
+    <h2 class="section-title">Live in about ten minutes.</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <span class="how-num">First</span>
+        <h4>Connect your website</h4>
+        <p>Add your domain — no code, no plugin required to get your first report.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">Then</span>
+        <h4>Beacon runs its first scan</h4>
+        <p>We check your visibility across all five engines and show you exactly where you stand today.</p>
+      </div>
+      <div class="how-step">
+        <span class="how-num">After that</span>
+        <h4>You get a weekly pulse</h4>
+        <p>A short, plain-language report: what changed, what to fix, and what's working — every week, automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIAL / TRUST ============ -->
+<section class="trust">
+  <div class="section-inner trust-inner">
+    <blockquote>
+      "We had no idea we'd gone quiet on AI search until our direct traffic
+      started dropping. Beacon would have caught it in week one, not month three."
+    </blockquote>
+    <p class="trust-attribution">— Early beta conversation, e-commerce founder</p>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="pricing">
+  <div class="section-inner">
+    <p class="eyebrow eyebrow-dark">Simple pricing</p>
+    <h2 class="section-title">Priced for businesses, not enterprises.</h2>
+
+    <div class="pricing-toggle">
+      <span class="toggle-label active" id="labelMonthly">Monthly</span>
+      <button class="toggle-switch" id="billingToggle" aria-pressed="false" aria-label="Toggle annual billing">
+        <span class="toggle-thumb"></span>
+      </button>
+      <span class="toggle-label" id="labelAnnual">Annual <span class="toggle-save">save 20%</span></span>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Starter</h3>
+        <p class="price-desc">For a single site finding its footing.</p>
+        <div class="price-amount"><span class="price-num" data-monthly="19" data-annual="15">$19</span><span class="price-period">/mo</span></div>
+        <ul class="price-list">
+          <li>1 website tracked</li>
+          <li>5 AI engines, daily checks</li>
+          <li>Weekly email report</li>
+          <li>Basic diagnostic suggestions</li>
+        </ul>
+        <a href="#waitlist" class="btn btn-line btn-block">Join the waitlist</a>
+      </div>
+
+      <div class="price-card price-card--featured">
+        <span class="price-badge">Most chosen</span>
+        <h3>Growth</h3>
+        <p class="price-desc">For businesses actively fixing what they find.</p>
+        <div class="price-amount"><span class="price-num" data-monthly="49" data-annual="39">$49</span><span class="price-period">/mo</span></div>
+        <ul class="price-list">
+          <li>3 websites tracked</li>
+          <li>5 AI engines, daily checks</li>
+          <li>Instant alerts on mention drops</li>
+          <li>Full diagnostic + prioritized fixes</li>
+          <li>Fix verification re-checks</li>
+        </ul>
+        <a href="#waitlist" class="btn btn-glow btn-block">Join the waitlist</a>
+      </div>
+
+      <div class="price-card">
+        <h3>Pro</h3>
+        <p class="price-desc">For agencies managing several clients.</p>
+        <div class="price-amount"><span class="price-num" data-monthly="99" data-annual="79">$99</span><span class="price-period">/mo</span></div>
+        <ul class="price-list">
+          <li>10 websites tracked</li>
+          <li>Everything in Growth</li>
+          <li>Client-ready PDF reports</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#waitlist" class="btn btn-line btn-block">Join the waitlist</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA / WAITLIST ============ -->
+<section class="cta" id="waitlist">
+  <div class="section-inner cta-inner">
+    <span class="cta-mark" aria-hidden="true"></span>
+    <h2>Find out if you're already invisible.</h2>
+    <p>Join the waitlist and be first to know when Beacon opens for your market.</p>
+    <form class="waitlist-form" id="waitlistForm">
+      <input type="email" placeholder="you@business.com" required aria-label="Email address" />
+      <button type="submit" class="btn btn-glow">Join the waitlist</button>
+    </form>
+    <p class="cta-note" id="waitlistNote">No spam. One email when we launch in your region — nothing before that.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="section-inner footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Beacon</span>
+    </div>
+    <p class="footer-tag">Built for businesses ready for the next era of search.</p>
+    <div class="footer-links">
+      <a href="#product">Product</a>
+      <a href="#pricing">Pricing</a>
+      <a href="dashboard-preview.html">Dashboard preview</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

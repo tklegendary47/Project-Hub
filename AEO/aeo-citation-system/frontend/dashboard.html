@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — Beacon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/dashboard.css" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="dash-body">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      Beacon
+    </a>
+    <div class="nav-cta">
+      <span id="navUserName" style="color: var(--muted-on-ink); font-size: 14px; margin-right: 4px;"></span>
+      <a href="#" class="btn btn-ghost" id="logoutLink">Log out</a>
+    </div>
+  </div>
+</header>
+
+<div class="dash-shell">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="dash-side">
+    <div class="dash-side-top">
+      <span class="dash-domain-label">Tracking</span>
+      <div class="dash-domain" id="dashDomain">—</div>
+    </div>
+    <nav class="dash-nav">
+      <a class="dash-nav-item dash-nav-item--active"><span class="dash-dot"></span> Overview</a>
+      <a class="dash-nav-item">Mentions</a>
+      <a class="dash-nav-item">Diagnostics</a>
+      <a class="dash-nav-item">Reports</a>
+      <a class="dash-nav-item">Settings</a>
+    </nav>
+    <div class="dash-side-bottom">
+      <p>Real data from your account — refreshes each time you run a check.</p>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="dash-main">
+
+    <!-- Loading state -->
+    <div class="state-message" id="loadingState">
+      <h3>Loading your dashboard…</h3>
+      <p>Fetching your latest results.</p>
+    </div>
+
+    <!-- Error state -->
+    <div class="state-message" id="errorState" style="display:none;">
+      <h3>Couldn't load your dashboard</h3>
+      <p id="errorMessage">Something went wrong talking to the server.</p>
+      <button class="btn btn-line" onclick="window.location.reload()">Try again</button>
+    </div>
+
+    <!-- No checks yet state -->
+    <div class="state-message" id="emptyChecksState" style="display:none;">
+      <h3>No scans yet</h3>
+      <p>Run your first check to see your mention rate across all five engines.</p>
+      <button class="btn btn-glow" id="firstCheckBtn">Run first check</button>
+    </div>
+
+    <!-- Real content (hidden until data loads) -->
+    <div id="dashContent" style="display:none;">
+      <div class="dash-header-row">
+        <div>
+          <p class="dash-eyebrow" id="dashEyebrow">Live results</p>
+          <h1 class="dash-title" id="dashTitle">Here's where you stand.</h1>
+        </div>
+        <button class="btn btn-line" id="runCheckBtn">Run new check</button>
+      </div>
+
+      <div class="dash-stats">
+        <div class="dash-card">
+          <span class="dash-card-label">Overall mention rate</span>
+          <div class="dash-card-value" id="statMention">0%</div>
+          <span class="dash-card-delta" id="statMentionNote">Based on your last checks</span>
+        </div>
+        <div class="dash-card">
+          <span class="dash-card-label">Engines citing you</span>
+          <div class="dash-card-value" id="statEngines">0/5</div>
+          <span class="dash-card-delta">As of your most recent check</span>
+        </div>
+        <div class="dash-card">
+          <span class="dash-card-label">Open diagnostics</span>
+          <div class="dash-card-value" id="statOpen">0</div>
+          <span class="dash-card-delta dash-card-delta--warn" id="statOpenNote">Needs attention</span>
+        </div>
+        <div class="dash-card">
+          <span class="dash-card-label">Website tracked</span>
+          <div class="dash-card-value" id="statWebsite" style="font-size:18px;">—</div>
+          <span class="dash-card-delta">Added <span id="statAddedDate">—</span></span>
+        </div>
+      </div>
+
+      <section class="dash-panel">
+        <div class="dash-panel-head">
+          <h2>Mention rate by engine</h2>
+          <span class="dash-panel-note" id="engineNote">Last 10 checks per engine</span>
+        </div>
+        <div class="engine-list" id="engineList"><!-- populated by JS --></div>
+      </section>
+
+      <section class="dash-panel">
+        <div class="dash-panel-head">
+          <h2>What to fix next</h2>
+          <span class="dash-panel-note">Ranked by most recent</span>
+        </div>
+        <div class="diag-list" id="diagList"><!-- populated by JS --></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard-live.js"></script>
+</body>
+</html>
