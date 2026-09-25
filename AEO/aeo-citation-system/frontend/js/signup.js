@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  renderConnectionBanner("connBanner");
+
   // If already logged in, no reason to see the signup page again.
   if (getToken()) {
     window.location.href = "onboarding.html";

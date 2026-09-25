@@ -61,7 +61,19 @@ async function apiFetch(path, options = {}) {
   );
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  let res;
+  try {
+    res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  } catch (networkErr) {
+    // fetch() itself throws (not a 4xx/5xx) when it can't reach the server
+    // at all — wrong URL, backend not running, CORS blocked, etc. This is
+    // the exact case that shows up as the generic "Failed to fetch" error.
+    throw new Error(
+      `Can't reach the server at ${API_BASE}. Make sure the backend is running ` +
+      `(see README.md) and that CLIENT_ORIGIN in backend/.env matches this page's URL.`
+    );
+  }
+
   let data = {};
   try {
     data = await res.json();
@@ -73,6 +85,36 @@ async function apiFetch(path, options = {}) {
     throw new Error(data.error || `Request failed (${res.status})`);
   }
   return data;
+}
+
+// Pings the backend's health endpoint so pages can show a clear banner
+// BEFORE someone fills out a whole form only to hit "Failed to fetch."
+async function checkBackendHealth() {
+  try {
+    const res = await fetch(`${API_BASE}/health`, { method: "GET" });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// Renders (or hides) a connection-warning banner into a given container.
+// Call this on page load for any page that talks to the API.
+async function renderConnectionBanner(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const healthy = await checkBackendHealth();
+  if (healthy) {
+    container.style.display = "none";
+    return;
+  }
+  container.style.display = "flex";
+  container.innerHTML = `
+    <span class="conn-banner-dot"></span>
+    <span>Can't reach the server at <code>${API_BASE}</code> right now.
+    Make sure the backend is running before signing up or logging in —
+    see the README for setup steps.</span>
+  `;
 }
 
 function showFormError(el, message) {

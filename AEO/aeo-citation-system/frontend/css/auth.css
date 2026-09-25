@@ -132,3 +132,33 @@
   margin-bottom: 10px;
 }
 .state-message p { font-size: 14.5px; margin-bottom: 24px; }
+
+/* ---------- Connection banner (backend unreachable warning) ---------- */
+.conn-banner {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--coral-soft);
+  color: var(--coral);
+  border: 1px solid rgba(255, 95, 95, 0.28);
+  border-radius: var(--radius-sm);
+  padding: 13px 16px;
+  font-size: 13px;
+  line-height: 1.55;
+  margin-bottom: 22px;
+}
+.conn-banner code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: rgba(255, 95, 95, 0.12);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.conn-banner-dot {
+  flex-shrink: 0;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--coral);
+  margin-top: 5px;
+  box-shadow: 0 0 8px 2px rgba(255,95,95,0.5);
+}

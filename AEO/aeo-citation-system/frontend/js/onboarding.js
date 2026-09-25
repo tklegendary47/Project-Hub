@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   requireAuth();
+  renderConnectionBanner("connBanner");
 
   const logoutLink = document.getElementById("logoutLink");
   if (logoutLink) {

@@ -10,7 +10,43 @@ document.addEventListener("DOMContentLoaded", () => {
   initPricingToggle();
   initWaitlistForm();
   initNavScrollShadow();
+  initScrollReveal();
 });
+
+/* ---------------------------------------------------------
+   Premium touch: fade/rise sections and cards into view as
+   the user scrolls, instead of everything being static.
+--------------------------------------------------------- */
+function initScrollReveal() {
+  const targets = document.querySelectorAll(
+    ".section-title, .problem-card, .product-panel, .compare-col, .how-step, .price-card, .trust blockquote, .cta-mark, .cta h2, .cta p"
+  );
+  if (!targets.length) return;
+
+  targets.forEach((el, i) => {
+    el.classList.add("reveal");
+    el.style.transitionDelay = `${(i % 4) * 70}ms`;
+  });
+
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  targets.forEach((el) => observer.observe(el));
+}
 
 /* ---------------------------------------------------------
    Signature visual: a dim field of "businesses" (dots), with

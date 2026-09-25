@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  renderConnectionBanner("connBanner");
+
   if (getToken()) {
     window.location.href = "dashboard.html";
     return;
