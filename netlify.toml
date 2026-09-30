@@ -1,3 +1,0 @@
-[build]
-  base = "aeo-citation-system/frontend"
-  publish = "."
